@@ -8,31 +8,24 @@
  * Contributors:
  *     Bruno Quoitin - initial API and implementation
  ******************************************************************************/
-package reso.examples.projet;
+package reso.examples.project;
 
 import reso.common.AbstractApplication;
-import reso.ip.IPAddress;
 import reso.ip.IPHost;
 import reso.ip.IPLayer;
 
-public class AppSender extends AbstractApplication {
+public class AppReceiver extends AbstractApplication {
 	
 	private final IPLayer ip;
-    private final IPAddress dst;
-    private final int num;
-
-    public AppSender(IPHost host, IPAddress dst, int num) {	
-    	super(host, "sender");
-    	this.dst= dst;
-    	this.num= num;
-    	ip= host.getIPLayer();
+    	
+	public AppReceiver(IPHost host) {
+		super(host, "receiver");
+		ip= host.getIPLayer();
     }
-
-    public void start() throws Exception {
+	
+	public void start() {
     	ip.addListener(ProjectProtocol.IP_PROTO_PROJECT, new ProjectProtocol((IPHost) host));
-    	ip.send(IPAddress.ANY, dst, ProjectProtocol.IP_PROTO_PROJECT, new ProjectMessage(num));
     }
-    
-    public void stop() {}
+	
+	public void stop() {}
 }
-

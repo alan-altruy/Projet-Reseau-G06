@@ -8,7 +8,7 @@
  * Contributors:
  *     Bruno Quoitin - initial API and implementation
  ******************************************************************************/
-package reso.examples.projet;
+package reso.examples.project;
 
 import reso.ip.*;
 
@@ -28,7 +28,7 @@ public class ProjectProtocol implements IPInterfaceListener {
 		System.out.println("Project (" + (int) (host.getNetwork().getScheduler().getCurrentTime()*1000) + "ms)" +
 				" host=" + host.name + ", dgram.src=" + datagram.src + ", dgram.dst=" +
 				datagram.dst + ", iif=" + src + ", counter=" + msg.num);
-    	if (msg.num > 0)
-    		host.getIPLayer().send(IPAddress.ANY, datagram.src, IP_PROTO_PROJECT, new ProjectMessage(msg.num-1));
+    	if (msg.num > 0){}
+    		//host.getIPLayer().send(IPAddress.ANY, datagram.src, IP_PROTO_PROJECT, new ProjectMessage(msg.num-1));
 	}
 }

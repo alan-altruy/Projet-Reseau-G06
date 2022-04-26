@@ -8,7 +8,7 @@
  * Contributors:
  *     Bruno Quoitin - initial API and implementation
  ******************************************************************************/
-package reso.examples.projet;
+package reso.examples.project;
 
 import reso.common.Message;
 
