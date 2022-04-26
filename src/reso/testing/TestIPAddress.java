@@ -1,13 +1,14 @@
-/*package reso.testing;
+package reso.testing;
 
-import org.junit.Test;
+/*import org.junit.Test;
 
 import reso.ip.IPAddress;
-import junit.framework.TestCase;
+import junit.framework.TestCase;*/
 
-public class TestIPAddress extends TestCase {
+//public class TestIPAddress extends TestCase {
+public class TestIPAddress{
 	
-	@Test
+	/*@Test
 	public void testGetByAddress() throws Exception {
 		IPAddress a1= IPAddress.getByAddress(192, 168, 1, 2);
 		assertEquals(a1.addr[0], (byte) (192-128));
@@ -57,7 +58,6 @@ public class TestIPAddress extends TestCase {
 	public void testToString() throws Exception {
 		assertEquals(IPAddress.ANY.toString(), "0.0.0.0");
 		assertEquals(IPAddress.BROADCAST.toString(), "255.255.255.255");
-	}
+	}*/
 	
 }
-*/

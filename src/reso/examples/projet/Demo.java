@@ -8,19 +8,21 @@
  * Contributors:
  *     Bruno Quoitin - initial API and implementation
  ******************************************************************************/
-package reso.examples.pingpong;
+package reso.examples.projet;
 
-import reso.common.*;
-import reso.ethernet.*;
+import reso.common.Link;
+import reso.common.Network;
+import reso.ethernet.EthernetAddress;
+import reso.ethernet.EthernetFrame;
+import reso.ethernet.EthernetInterface;
 import reso.examples.static_routing.AppSniffer;
-import reso.ip.*;
+import reso.ip.IPAddress;
+import reso.ip.IPHost;
 import reso.scheduler.AbstractScheduler;
 import reso.scheduler.Scheduler;
 import reso.utilities.NetworkBuilder;
 
-public class Demo
-{
-
+public class Demo {
 	/* Enable or disable packet capture (can be used to observe ARP messages) */
 	private static final boolean ENABLE_SNIFFER= false;
 	

@@ -1,17 +1,17 @@
-/*package reso.testing;
+package reso.testing;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import reso.common.AbstractMessage;
 import reso.ethernet.EthernetAddress;
 import reso.ethernet.EthernetFrame;
 import reso.ip.Datagram;
 import reso.ip.IPAddress;
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
 
 public class TestEncapsulation {
 
-	public static final int DUMMY_PKT_LEN= 100;
+	/*public static final int DUMMY_PKT_LEN= 100;
 	
 	public static final int IP_PROTO_DUMMY= Datagram.allocateProtocolNumber("DUMMY");
 	
@@ -56,7 +56,6 @@ public class TestEncapsulation {
 	{
 		EthernetFrame f= new EthernetFrame(EthernetAddress.BROADCAST, EthernetAddress.BROADCAST, EthernetFrame.PROTO.IP,
 				new DummyMessage(2000));
-	}
+	}*/
 	
 }
-*/
