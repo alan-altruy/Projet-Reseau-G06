@@ -17,6 +17,7 @@ import reso.ethernet.EthernetFrame;
 import reso.ethernet.EthernetInterface;
 import reso.examples.static_routing.AppSniffer;
 import reso.ip.IPAddress;
+import reso.ip.IPEthernetAdapter;
 import reso.ip.IPHost;
 import reso.scheduler.AbstractScheduler;
 import reso.scheduler.Scheduler;
@@ -50,9 +51,6 @@ public class Demo {
     		final IPAddress IP_ADDR1= IPAddress.getByAddress(192, 168, 0, 1);
     		final IPAddress IP_ADDR2= IPAddress.getByAddress(192, 168, 0, 2);
 
-			//((IPEthernetAdapter) host1.getIPLayer().getInterfaceByName("eth0")).addARPEntry(IP_ADDR2, MAC_ADDR2);
-			//((IPEthernetAdapter) router.getIPLayer().getInterfaceByName("eth1")).addARPEntry(IP_ADDR4, MAC_ADDR4);
-
     		IPHost host1= NetworkBuilder.createHost(network, "H1", IP_ADDR1, MAC_ADDR1);
     		host1.getIPLayer().addRoute(IP_ADDR2, "eth0");
     		if (ENABLE_SNIFFER)
@@ -65,6 +63,8 @@ public class Demo {
 
     		EthernetInterface h1_eth0= (EthernetInterface) host1.getInterfaceByName("eth0");
     		EthernetInterface h2_eth0= (EthernetInterface) host2.getInterfaceByName("eth0");
+			((IPEthernetAdapter) host1.getIPLayer().getInterfaceByName("eth0")).addARPEntry(IP_ADDR2, MAC_ADDR2);
+			//((IPEthernetAdapter) host2.getIPLayer().getInterfaceByName("eth0")).addARPEntry(IP_ADDR1, MAC_ADDR1);
     		
     		// Connect both interfaces with a 5000km long link
     		new Link<EthernetFrame>(h1_eth0, h2_eth0, 5000000, 100000);
