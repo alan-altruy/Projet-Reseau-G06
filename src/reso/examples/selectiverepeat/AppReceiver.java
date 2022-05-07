@@ -8,25 +8,23 @@
  * Contributors:
  *     Bruno Quoitin - initial API and implementation
  ******************************************************************************/
-package reso.examples.project;
+package reso.examples.selectiverepeat;
 
-import reso.common.Message;
+import reso.common.AbstractApplication;
+import reso.ip.IPHost;
 
-public class ProjectMessage implements Message {
+public class AppReceiver extends AbstractApplication {
 	
-	public final int num; 
+	private final TransportLayer transportLayer;
+    	
+	public AppReceiver(IPHost host) {
+		super(host, "receiver");
+		transportLayer = new TransportLayer(host);
+    }
 	
-	public ProjectMessage(int num) {
-		this.num= num;
-	}
+	public void start() {
+    	transportLayer.listen();
+    }
 	
-	public String toString() {
-		return "Project [num=" + num + "]";
-	}
-
-	@Override
-	public int getByteLength() {
-		// The project message carries a single 'int'
-		return Integer.SIZE / 8;
-	}
+	public void stop() {}
 }

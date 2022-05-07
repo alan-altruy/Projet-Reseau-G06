@@ -8,7 +8,7 @@
  * Contributors:
  *     Bruno Quoitin - initial API and implementation
  ******************************************************************************/
-package reso.examples.project;
+package reso.examples.selectiverepeat;
 
 import reso.common.Link;
 import reso.common.Network;
@@ -55,7 +55,7 @@ public class Demo {
     		host1.getIPLayer().addRoute(IP_ADDR2, "eth0");
     		if (ENABLE_SNIFFER)
     			host1.addApplication(new AppSniffer(host1, new String [] {"eth0"}));
-    		host1.addApplication(new AppSender(host1, IP_ADDR2, 5));
+    		host1.addApplication(new AppSender(host1, IP_ADDR2));
 
     		IPHost host2= NetworkBuilder.createHost(network,"H2", IP_ADDR2, MAC_ADDR2);
     		host2.getIPLayer().addRoute(IP_ADDR1, "eth0");
@@ -64,7 +64,7 @@ public class Demo {
     		EthernetInterface h1_eth0= (EthernetInterface) host1.getInterfaceByName("eth0");
     		EthernetInterface h2_eth0= (EthernetInterface) host2.getInterfaceByName("eth0");
 			((IPEthernetAdapter) host1.getIPLayer().getInterfaceByName("eth0")).addARPEntry(IP_ADDR2, MAC_ADDR2);
-			//((IPEthernetAdapter) host2.getIPLayer().getInterfaceByName("eth0")).addARPEntry(IP_ADDR1, MAC_ADDR1);
+			((IPEthernetAdapter) host2.getIPLayer().getInterfaceByName("eth0")).addARPEntry(IP_ADDR1, MAC_ADDR1);
     		
     		// Connect both interfaces with a 5000km long link
     		new Link<EthernetFrame>(h1_eth0, h2_eth0, 5000000, 100000);

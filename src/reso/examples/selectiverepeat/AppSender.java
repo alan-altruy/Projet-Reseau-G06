@@ -8,24 +8,25 @@
  * Contributors:
  *     Bruno Quoitin - initial API and implementation
  ******************************************************************************/
-package reso.examples.project;
+package reso.examples.selectiverepeat;
 
 import reso.common.AbstractApplication;
+import reso.ip.IPAddress;
 import reso.ip.IPHost;
-import reso.ip.IPLayer;
 
-public class AppReceiver extends AbstractApplication {
-	
-	private final IPLayer ip;
-    	
-	public AppReceiver(IPHost host) {
-		super(host, "receiver");
-		ip= host.getIPLayer();
+public class AppSender extends AbstractApplication {
+
+    private final TransportLayer transportLayer;
+
+    public AppSender(IPHost host, IPAddress dst) {
+    	super(host, "sender");
+        transportLayer = new TransportLayer(host, dst);
     }
-	
-	public void start() {
-    	ip.addListener(ProjectProtocol.IP_PROTO_PROJECT, new ProjectProtocol((IPHost) host));
+
+    public void start() throws Exception {
+        transportLayer.send(new SelectiveRepeatMessage(10));
     }
-	
-	public void stop() {}
+    
+    public void stop() {}
+
 }
