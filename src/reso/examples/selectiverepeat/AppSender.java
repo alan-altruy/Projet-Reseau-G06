@@ -24,7 +24,7 @@ public class AppSender extends AbstractApplication {
     }
 
     public void start() throws Exception {
-        transportLayer.send(new SelectiveRepeatMessage(10));
+        transportLayer.sendMessage(new SelectiveRepeatMessage(10));
     }
     
     public void stop() {}

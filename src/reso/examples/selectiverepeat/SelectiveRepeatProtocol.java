@@ -19,7 +19,6 @@ public class SelectiveRepeatProtocol implements IPInterfaceListener {
 	
 	private final IPHost host;
 	private final TransportLayer transportLayer;
-	private int sequenceNumber = 0, repeat = 0;
 	
 	public SelectiveRepeatProtocol(IPHost host, TransportLayer transportLayer) {
 		this.host= host;
@@ -31,18 +30,10 @@ public class SelectiveRepeatProtocol implements IPInterfaceListener {
 		Message message = datagram.getPayload();
 		if (message.getByteLength() == 4){
 			SelectiveRepeatAck ack = (SelectiveRepeatAck) message;
-			if (ack.getPayload()==sequenceNumber){
-				repeat++;
-			} else {
-				repeat=1;
-				sequenceNumber = ack.getPayload();
-			}
-			if (repeat == 3){
-				transportLayer.send(ack.getPayload());
-			}
+			transportLayer.receiveAck(ack, datagram.dst, datagram.src);
 		}else{
 			SelectiveRepeatPacket packet = (SelectiveRepeatPacket) message;
-			transportLayer.receive(packet, datagram.dst, datagram.src);
+			transportLayer.receivePacket(packet, datagram.dst, datagram.src);
 		}
 		System.out.println("SelectiveRepeat (" + (int) (host.getNetwork().getScheduler().getCurrentTime()*1000) + "ms)" +
 				" host=" + host.name + ", dgram.src=" + datagram.src + ", dgram.dst=" +
