@@ -30,7 +30,7 @@ public class SelectiveRepeatProtocol implements IPInterfaceListener {
 		Message message = datagram.getPayload();
 		if (message.getByteLength() == 4){
 			SelectiveRepeatAck ack = (SelectiveRepeatAck) message;
-			transportLayer.receiveAck(ack, datagram.dst, datagram.src);
+			transportLayer.receiveAck(ack);
 		}else{
 			SelectiveRepeatPacket packet = (SelectiveRepeatPacket) message;
 			transportLayer.receivePacket(packet, datagram.dst, datagram.src);

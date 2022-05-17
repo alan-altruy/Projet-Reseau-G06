@@ -17,7 +17,7 @@ public class TransportLayer{
     private List<SelectiveRepeatPacket> packets, buffer;
     private HashMap<Integer, PacketTimer> packetTimers;
     private int expected=1;
-    private int expectedAck=0, repeat = 0;
+    private int repeat = 0;
 
     private class PacketTimer extends AbstractTimer {
 
@@ -29,7 +29,7 @@ public class TransportLayer{
             this.start();
         }
         protected void run() throws Exception {
-            System.out.println("time=" + scheduler.getCurrentTime() + " seqNum=" + sequenceNumber);
+            System.out.println("time=" + scheduler.getCurrentTime() + " seqNum=" + (sequenceNumber+1));
             sendPacket(sequenceNumber);
         }
     }
@@ -57,11 +57,11 @@ public class TransportLayer{
         }
     }
 
-    public void sendAck(SelectiveRepeatAck ack, IPAddress source, IPAddress destination) throws Exception {
+    private void sendAck(SelectiveRepeatAck ack, IPAddress source, IPAddress destination) throws Exception {
         ip.send(source, destination, SelectiveRepeatProtocol.IP_PROTO_SELECTIVE_REPEAT, ack);
     }
 
-    public void sendPacket(int sequenceNumber) throws Exception{
+    private void sendPacket(int sequenceNumber) throws Exception {
         if (Math.random() < 0.9){
             ip.send(IPAddress.ANY, dst, SelectiveRepeatProtocol.IP_PROTO_SELECTIVE_REPEAT, packets.get(sequenceNumber));
         } else {
@@ -85,17 +85,20 @@ public class TransportLayer{
         ip.addListener(SelectiveRepeatProtocol.IP_PROTO_SELECTIVE_REPEAT, new SelectiveRepeatProtocol(host, this));
     }
 
-    public void receiveAck(SelectiveRepeatAck ack, IPAddress dst, IPAddress src) throws Exception {
-        if (ack.getPayload()==expectedAck){
+    public void receiveAck(SelectiveRepeatAck ack) throws Exception {
+        if (ack.getPayload()==expected-1){
             repeat++;
-        } else {
-            packetTimers.get(expectedAck).stop();
-            repeat=1;
-            expectedAck = ack.getPayload();
+        } else if (ack.getPayload()==expected){
+            repeat = 1;
+            expected++;
+        }
+        if (packetTimers.containsKey(ack.getPayload()-1)) {
+            packetTimers.get(ack.getPayload()-1).stop();
         }
         //System.out.println("Repeat: " + repeat);
         if (repeat == 3){
-            sendPacket(ack.getPayload());
+            sendPacket(expected-1);
+            System.out.println("Triple Ack "+ (expected-1));
         }
     }
 
@@ -106,14 +109,28 @@ public class TransportLayer{
             packets.add(packet);
             sendAck(new SelectiveRepeatAck(sequenceNumber), dst, src);
             expected++;
-            checkBuffer(dst, src);
-        } else {
+            checkBuffer(src, dst);
+        } else if (!packets.contains(packet) && !buffer.contains(packet)){
             buffer.add(packet);
             sendAck(new SelectiveRepeatAck(expected-1), dst, src);
         }
+        printMessage();
     }
 
-    private void checkBuffer(IPAddress dst, IPAddress src) throws Exception {
+    private void printMessage(){
+        String pack = "Liste packets: ";
+        String buffs = "Liste buffer: ";
+        for (SelectiveRepeatPacket packet : packets){
+            pack+=packet.getSequenceNumber()+" - ";
+        }
+        for (SelectiveRepeatPacket buff : buffer){
+            buffs+=buff.getSequenceNumber()+" - ";
+        }
+        System.out.println(pack);
+        System.out.println(buffs);
+    }
+
+    private void checkBuffer(IPAddress src, IPAddress dst) throws Exception {
         List<SelectiveRepeatPacket> toMove = new ArrayList<>();
         for (SelectiveRepeatPacket packet : buffer){
             if (packet.getSequenceNumber() == expected){
