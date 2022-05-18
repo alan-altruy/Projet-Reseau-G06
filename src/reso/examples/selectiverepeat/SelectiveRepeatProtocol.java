@@ -28,6 +28,9 @@ public class SelectiveRepeatProtocol implements IPInterfaceListener {
 	@Override
 	public void receive(IPInterfaceAdapter src, Datagram datagram) throws Exception {
 		Message message = datagram.getPayload();
+		System.out.println("* SelectiveRepeat (" + (int) (host.getNetwork().getScheduler().getCurrentTime()*1000) + "ms)" +
+				" host=" + host.name + ", dgram.src=" + datagram.src + ", dgram.dst=" +
+				datagram.dst + ", iif=" + src + ", " + message.toString());
 		if (message.getByteLength() == 4){
 			SelectiveRepeatAck ack = (SelectiveRepeatAck) message;
 			transportLayer.receiveAck(ack);
@@ -35,8 +38,5 @@ public class SelectiveRepeatProtocol implements IPInterfaceListener {
 			SelectiveRepeatPacket packet = (SelectiveRepeatPacket) message;
 			transportLayer.receivePacket(packet, datagram.dst, datagram.src);
 		}
-		System.out.println("SelectiveRepeat (" + (int) (host.getNetwork().getScheduler().getCurrentTime()*1000) + "ms)" +
-				" host=" + host.name + ", dgram.src=" + datagram.src + ", dgram.dst=" +
-				datagram.dst + ", iif=" + src + ", " + message.toString());
 	}
 }
