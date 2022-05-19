@@ -37,9 +37,9 @@ public class TransportLayer{
 
         public PacketTimer(int sequenceNumber, double interval, boolean isRetransmitted) {
             super(host.getNetwork().getScheduler(), interval, false);
+            startTime = host.getNetwork().getScheduler().getCurrentTime();
             this.sequenceNumber = sequenceNumber;
             this.isRetransmitted = isRetransmitted;
-            startTime = host.getNetwork().getScheduler().getCurrentTime();
             this.start();
         }
 
@@ -50,6 +50,7 @@ public class TransportLayer{
 
         protected void run() throws Exception {
             rto *=2;
+            congestionWindow.timeout();
             System.out.println("$ RTO updated x2: " + rto);
             System.out.println("- time=" + (scheduler.getCurrentTime()-startTime) + " seqNum=" + (sequenceNumber));
             sendPacket(sequenceNumber);
@@ -94,7 +95,7 @@ public class TransportLayer{
     }
 
     private void sendAck(SelectiveRepeatAck ack, IPAddress source, IPAddress destination) throws Exception {
-        if (Math.random() < 0.9){
+        if (Math.random() < 0.95){
             ip.send(source, destination, SelectiveRepeatProtocol.IP_PROTO_SELECTIVE_REPEAT, ack);
         } else {
             System.out.println("[] Ack lost [sequence number:  " + ack.getPayload() + "]");
@@ -102,7 +103,7 @@ public class TransportLayer{
     }
 
     public void sendPacket(int sequenceNumber) throws Exception {
-        if (Math.random() < 0.9){
+        if (Math.random() < 0.95){
             ip.send(IPAddress.ANY, dst, SelectiveRepeatProtocol.IP_PROTO_SELECTIVE_REPEAT, packets.get(sequenceNumber));
         } else {
             System.out.println("[] Packet lost [sequence number:  " + packets.get(sequenceNumber).getSequenceNumber() + "]");
@@ -146,7 +147,7 @@ public class TransportLayer{
         }
         //System.out.println("Repeat: " + repeat);
         if (repeat == 3){
-            //TODO diviser fenêtre de congestion
+            congestionWindow.multiplicativeDecrease();
         }
     }
 
@@ -182,12 +183,12 @@ public class TransportLayer{
         if (expected == sequenceNumber){
             packets.add(packet);
             expected++;
-            checkBuffer();
         } else if (!packets.contains(packet) && !buffer.contains(packet)){
             buffer.add(packet);
         }
+        checkBuffer();
         sendAck(new SelectiveRepeatAck(sequenceNumber), dst, src);
-        //printMessage();
+        printMessage();
     }
 
     private void printMessage(){
@@ -200,6 +201,7 @@ public class TransportLayer{
             buffs.append(buff.getSequenceNumber()).append(" - ");
         }
         System.out.println(pack);
+        System.out.println("Expected = " + expected);
         System.out.println(buffs);
     }
 
@@ -209,8 +211,6 @@ public class TransportLayer{
             if (packet.getSequenceNumber() == expected){
                 toMove.add(packet);
                 expected++;
-            } else {
-                break;
             }
         }
         buffer.removeAll(toMove);
