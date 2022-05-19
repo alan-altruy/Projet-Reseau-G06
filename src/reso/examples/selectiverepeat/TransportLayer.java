@@ -162,9 +162,8 @@ public class TransportLayer{
         double rtt = packetTimers.get(sequenceNumber).getRTT();
         if (sRTTList.isEmpty()){
             sRTTList.add(rtt);
-        } else {
-            sRTTList.add((1-ALPHA)*sRTTList.get(sRTTList.size()-1) + ALPHA * rtt);
         }
+            sRTTList.add((1-ALPHA)*sRTTList.get(sRTTList.size()-1) + ALPHA * rtt);
     }
 
     private void updateDevRTTList(int sequenceNumber){

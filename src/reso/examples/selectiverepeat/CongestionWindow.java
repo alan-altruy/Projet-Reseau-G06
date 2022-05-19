@@ -4,8 +4,8 @@ import java.util.List;
 
 public class CongestionWindow {
 
-    private int size, firstSeqNum, nextSeqNum, ssThresh=8;
-    private boolean inSlowStart=true;
+    private int size, firstSeqNum, nextSeqNum, ssThresh;
+    private boolean inSlowStart;
     private List<Boolean> packetAcks;
     private List<SelectiveRepeatPacket> window;
     private TransportLayer transportLayer;
@@ -14,7 +14,9 @@ public class CongestionWindow {
     public CongestionWindow(TransportLayer transportLayer) {
         this.transportLayer = transportLayer;
         this.size = 1;
+        this.ssThresh = 8;
         this.firstSeqNum = 0;
+        this.inSlowStart = true;
         this.packetAcks= new ArrayList<>();
         this.window = new ArrayList<>();
         this.plot = new PlotWindow("Window size over time");
@@ -22,7 +24,6 @@ public class CongestionWindow {
 
 
     private void updateWindowSize() throws Exception {
-        int sizeBeforeUpdate = size;
         if (size >= ssThresh) {
             inSlowStart = false;
         }
@@ -54,6 +55,8 @@ public class CongestionWindow {
         if (sequenceNumber >= firstSeqNum){
             packetAcks.set(sequenceNumber - firstSeqNum, true);
             checkWindow();
+            updateWindowSize();
+            plot.addPoint(size);
         }
     }
 
@@ -66,14 +69,12 @@ public class CongestionWindow {
     }
 
     public void removePacket() throws Exception {
-        plot.addPoint(size+0.0);
-
+        //plot.addPoint(size+0.0);
         nextSeqNum = window.get(window.size()-1).getSequenceNumber()+1;
         packetAcks.remove(0);
         window.remove(0);
         printPacket();
         firstSeqNum++;
-        updateWindowSize();
         if (!window.isEmpty()){
             checkWindow();
         }
