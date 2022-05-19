@@ -77,18 +77,12 @@ public class CongestionWindow {
         }
     }
 
-    /*public void slowStart(){
-        minimum++;
-        maximum++;
-        updateWindowSize(getSize()+1);
-    }*/
+    public void slowStart(double time) throws Exception {
+        updateWindowSize(getSize()+1, time);
+    }
 
 
     public int getSize(){
         return size;
     }
-
-    /*public boolean isInCongestionWindows(int sequenceNumber){
-        return (minimum >= sequenceNumber && maximum <= sequenceNumber) ;
-    }*/
 }
