@@ -1,5 +1,4 @@
 package reso.examples.selectiverepeat;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,19 +8,28 @@ public class CongestionWindow {
     private List<Boolean> packetAcks;
     private List<SelectiveRepeatPacket> window;
     private TransportLayer transportLayer;
+    private PlotWindow plot;
 
-    public CongestionWindow(TransportLayer transportLayer){
+    public CongestionWindow(TransportLayer transportLayer) {
         this.transportLayer = transportLayer;
         this.size = 4;
         this.cursor = 0;
         this.firstSeqNum = 0;
         this.packetAcks= new ArrayList<>();
         this.window = new ArrayList<>();
+        this.plot = new PlotWindow("Window size over time");
     }
 
 
-    public void updateWindowSize(int size){
+    public void updateWindowSize(int size, double time) throws Exception {
+        int sizeBefore= getSize();
+        plot.addPoint(time, size+0.0);
         this.size = size;
+        if (this.size > sizeBefore){
+            while (window.size()<size){
+                addPacket(transportLayer.getPacket(window.get(window.size()-1).getSequenceNumber()+1));
+            }
+        }
     }
 
     public void incrementCursor(){
