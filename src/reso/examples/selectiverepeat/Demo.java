@@ -14,27 +14,12 @@ import reso.scheduler.Scheduler;
 import reso.utilities.NetworkBuilder;
 
 /**
- * It creates two hosts, H1 and H2, and connects them with a 5000km long link
+ * It creates two hosts, H1 and H2, and connects them with a 5000km long link.
  */
 public class Demo {
 	/* Enable or disable packet capture (can be used to observe ARP messages) */
 	private static final boolean ENABLE_SNIFFER= false;
-	
-	/* A message is sent from the sender to the receiver with a counter initialized to 5.
-	 * When the receiver get the message it decreases the counter and send the message back
-	 * to the sender. Sender/receiver do this until a message is received with a counter
-	 * equal to 0.
-	 * 
-	 * Each time the sender/receiver gets a message it will write a message on the console.
-	 * The length of the link between the two hosts is 5000km long, which gives a propagation
-	 * delay of 0.025 seconds.
-	 * 
-	 *  The console should show 6 messages. The first message appears after 0.075 seconds
-	 *  as a first RTT is required for the first ARP query/response exchange initiated by H1.
-	 *  The second message appears after 0.15 seconds as there is also an ARP query/response
-	 *  initiated by host 2. The third message appears after 0.175 seconds and further messages
-	 *  are spaced by 0.025 seconds (only the propagation delay). 
-	 */
+
     public static void main(String [] args) {
 		int packet=30;
 		double rate=0.95;

@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * It's a class that implements the selective repeat protocol
+ * It's a class that implements the selective repeat protocol.
  */
 public class TransportLayer{
 
@@ -30,8 +30,8 @@ public class TransportLayer{
     private CongestionWindow congestionWindow;
 
     /**
-     * The `PacketTimer` class is a subclass of the `AbstractTimer` class. It is used to keep track of
-     * the time it takes for a packet to be acknowledged by the receiver
+     * The "PacketTimer" class is a subclass of the "AbstractTimer" class. It is used to keep track of
+     * the time it takes for a packet to be acknowledged by the receiver.
      */
     private class PacketTimer extends AbstractTimer {
 
@@ -39,7 +39,7 @@ public class TransportLayer{
         private final boolean isRetransmitted;
         double startTime, endTime;
 
-        // Create a timer for all packets that are sent
+        // Create a timer for all packets that are sent.
         public PacketTimer(int sequenceNumber, double interval, boolean isRetransmitted) {
             super(host.getNetwork().getScheduler(), interval, false);
             startTime = host.getNetwork().getScheduler().getCurrentTime();
@@ -49,7 +49,7 @@ public class TransportLayer{
         }
 
         /**
-         * The function stops the timer and prints out the RTT
+         * The function stops the timer and prints out the RTT.
          */
         private void stopTimer() {
             endTime = scheduler.getCurrentTime();
@@ -59,8 +59,7 @@ public class TransportLayer{
         }
 
         /**
-         * When a timeout occurs, the congestion window is reset, the RTO is doubled, and the packet is
-         * resent
+         * When a timeout occurs, the congestion window is reset, the RTO is doubled, and the packet is resent.
          */
         protected void run() throws Exception {
             rto *=2;
@@ -72,7 +71,7 @@ public class TransportLayer{
         }
 
         /**
-         * This function checks if the packet is retransmitted or not
+         * This function checks if the packet is retransmitted or not.
          * 
          * @return The method isRetransmitted() is being returned.
          */
@@ -81,7 +80,7 @@ public class TransportLayer{
         }
 
         /**
-         * This function returns the round trip time of the packet
+         * This function returns the round trip time of the packet.
          * 
          * @return The difference between the end time and the start time.
          */
@@ -90,7 +89,6 @@ public class TransportLayer{
         }
     }
 
-   
     // It's the constructor of the class TransportLayer for the AppReceiver.
     public TransportLayer(IPHost host, Double rate){
         this.rate = rate;
@@ -116,9 +114,9 @@ public class TransportLayer{
 
     /**
      * The function sends a message for any incoming packets, then it hashes the
-     * message into packets, and then it adds the first n packets to the congestion window
+     * message into packets, and then it adds the first n packets to the congestion window.
      * 
-     * @param message The message to be sent
+     * @param message The message to be sent.
      */
     public void sendMessage(SelectiveRepeatMessage message) throws Exception {
         listen();
@@ -130,9 +128,9 @@ public class TransportLayer{
 
     
     /**
-     * It sends an ack to the source with a probability of the rate (to simulate packet loss)
-     * 
-     * @param ack The ack to send
+     * It sends an ack to the source with a probability of the rate (to simulate packet loss).
+     *
+     * @param ack The ack to send.
      * @param source The source IP address of the packet.
      * @param destination The destination IP address.
      */
@@ -147,7 +145,7 @@ public class TransportLayer{
     }
 
     /**
-     * It sends a packet to the destination, and if it's not lost, it starts a timer for that packet
+     * It sends a packet to the destination, and if it's not lost, it starts a timer for that packet.
      * 
      * @param sequenceNumber The sequence number of the packet to be sent.
      */
@@ -178,9 +176,9 @@ public class TransportLayer{
     /**
      * If the ack is for the expected packet, increment the repeat counter. If the ack is for the next
      * packet, reset the repeat counter and increment the expected packet. If the ack is for a packet
-     * that has a timer, stop the timer and update the RTO
+     * that has a timer, stop the timer and update the RTO.
      * 
-     * @param ack the ack received from the receiver
+     * @param ack the ack received from the receiver.
      */
     public void receiveAck(SelectiveRepeatAck ack) throws Exception {
         if (ack.getPayload()==expected){
@@ -203,9 +201,9 @@ public class TransportLayer{
     }
 
     /**
-     * The RTO is updated by taking the last SRTT and adding 4 times the last DevRTT
+     * The RTO is updated by taking the last SRTT and adding 4 times the last DevRTT.
      * 
-     * @param sequenceNumber the sequence number of the packet that was just received
+     * @param sequenceNumber the sequence number of the packet that was just received.
      */
     private void updateRTO(int sequenceNumber) {
         updateSRTTList(sequenceNumber);
@@ -215,7 +213,7 @@ public class TransportLayer{
     }
 
     /**
-     * This function updates the sRTTList with the new RTT value
+     * This function updates the sRTTList with the new RTT value.
      * 
      * @param sequenceNumber The sequence number of the packet that was just received.
      */
@@ -228,7 +226,7 @@ public class TransportLayer{
     }
 
     /**
-     * This function updates the list of deviations of the round trip times
+     * This function updates the list of deviations of the round trip times.
      * 
      * @param sequenceNumber The sequence number of the packet that was just received.
      */
@@ -246,11 +244,11 @@ public class TransportLayer{
      * If the packet is the next expected packet, add it to the list of packets. If it's not the next
      * expected packet, but it's not already in the buffer, add it to the buffer. Then, check the
      * buffer to see if any packets in the buffer can be added to the list of packets. Finally, send an
-     * ack for the packet and print the message
+     * ack for the packet and print the message.
      * 
-     * @param packet The packet that was received
-     * @param dst destination address
-     * @param src The source IP address of the packet
+     * @param packet The packet that was received.
+     * @param dst destination address.
+     * @param src The source IP address of the packet.
      */
     public void receivePacket(SelectiveRepeatPacket packet, IPAddress dst, IPAddress src) throws Exception {
         int sequenceNumber = packet.getSequenceNumber();
@@ -266,8 +264,7 @@ public class TransportLayer{
     }
 
     /**
-     * It prints out the list of packets, the expected sequence number, and the list of packets in the
-     * buffer
+     * It prints out the list of packets, the expected sequence number, and the list of packets in the buffer.
      */
     private void printMessage(){
         StringBuilder pack = new StringBuilder("     List packets: ");
@@ -285,9 +282,9 @@ public class TransportLayer{
     }
 
     /**
-     * It adds the packet to the buffer in the correct order
+     * It adds the packet to the buffer in the correct order.
      * 
-     * @param packet the packet to be added to the buffer
+     * @param packet the packet to be added to the buffer.
      */
     private void addToBuffer(SelectiveRepeatPacket packet) {
         int seqNum = packet.getSequenceNumber();
@@ -306,7 +303,7 @@ public class TransportLayer{
 
     /**
      * If the packet in the buffer has the expected sequence number, move it to the packets list and
-     * increment the expected sequence number
+     * increment the expected sequence number.
      */
     private void checkBuffer() {
         List<SelectiveRepeatPacket> toMove = new ArrayList<>();

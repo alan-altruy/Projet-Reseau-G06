@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * It's a wrapper class for the payload and sequence number of a packet
+ * It's a wrapper class for the payload and sequence number of a packet.
  */
 public class SelectiveRepeatPacket implements Message {
 
@@ -20,7 +20,7 @@ public class SelectiveRepeatPacket implements Message {
     }
 
     /**
-     * It takes a message and returns a list of packets
+     * It takes a message and returns a list of packets.
      * 
      * @param message The message to be sent.
      * @return A list of packets.
@@ -40,7 +40,7 @@ public class SelectiveRepeatPacket implements Message {
     }
 
     /**
-     * This function returns the payload of the current node
+     * This function returns the payload of the current node.
      * 
      * @return The payload of the packet.
      */
@@ -58,7 +58,7 @@ public class SelectiveRepeatPacket implements Message {
     }
 
     /**
-     * The toString() method returns a string representation of the object
+     * The toString() method returns a string representation of the object.
      * 
      * @return The payload and sequence number of the packet.
      */

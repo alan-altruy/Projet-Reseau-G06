@@ -5,7 +5,7 @@ import reso.ip.*;
 
 /**
  * It receives a datagram, checks if it's an ack or a packet, and then calls the appropriate method in
- * the transport layer
+ * the transport layer.
  */
 public class SelectiveRepeatProtocol implements IPInterfaceListener {
 
@@ -22,7 +22,7 @@ public class SelectiveRepeatProtocol implements IPInterfaceListener {
 	
 	/**
 	 * The function receives a datagram from the network layer, and if the datagram contains a packet, it
-	 * passes the packet to the transport layer, else it passs the ack to the rransport layer
+	 * passes the packet to the transport layer, else it passes the ack to the transport layer.
 	 * 
 	 * @param src The IPInterfaceAdapter that received the datagram.
 	 * @param datagram The datagram that was received.

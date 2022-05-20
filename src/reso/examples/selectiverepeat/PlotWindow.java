@@ -1,4 +1,5 @@
 package reso.examples.selectiverepeat;
+
 import javax.swing.*;
 
 import de.erichseifert.gral.data.DataTable;
@@ -11,10 +12,9 @@ import de.erichseifert.gral.ui.InteractivePanel;
 
 import java.awt.*;
 
-
 /**
- * It's a Java class that extends JFrame and has a method to add a point to a graph
- * This represents the evolution of the size of the send window
+ * It's a Java class that extends JFrame and has a method to add a point to a graph.
+ * This represents the evolution of the congestion window's size.
  */
 public class PlotWindow extends JFrame{
     private final Color RED_COLOR = Color.RED, GREEN_COLOR = new Color(30, 100, 40);
@@ -50,7 +50,7 @@ public class PlotWindow extends JFrame{
 
     /**
      * It adds a point to the graph, and if the point is higher than the previous point, it makes the
-     * line green, otherwise it makes it red
+     * line green, otherwise it makes it red.
      * 
      * @param y The value of the point to be added.
      */
@@ -70,4 +70,3 @@ public class PlotWindow extends JFrame{
         setVisible(true);
     }
 }
-

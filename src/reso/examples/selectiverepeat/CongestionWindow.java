@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * It's a class that represents the congestion window
+ * It's a class that represents the congestion window.
  */
 public class CongestionWindow {
 
@@ -14,8 +14,7 @@ public class CongestionWindow {
     private TransportLayer transportLayer;
     private PlotWindow plot;
 
-    // This is the constructor of the class CongestionWindow. It initializes the variables of the
-    // class.
+    // This is the constructor of the class CongestionWindow. It initializes the variables of the class.
     public CongestionWindow(TransportLayer transportLayer) {
         this.transportLayer = transportLayer;
         this.size = 1;
@@ -27,11 +26,10 @@ public class CongestionWindow {
         this.plot = new PlotWindow("Window size over time");
     }
 
-
     /**
      * If the window size is greater than the slow start threshold, then we are in congestion avoidance
      * mode. If we are in slow start mode, then we double the window size. If we are in congestion
-     * avoidance mode, then we increment the window size by one
+     * avoidance mode, then we increment the window size by one.
      */
     private void updateWindowSize() throws Exception {
         if (size >= ssThresh) {
@@ -40,7 +38,7 @@ public class CongestionWindow {
         if (inSlowStart) {
             size *= 2;//Slow Start
         } else {
-            size++;//CA
+            size++;//Congestion Avoidance
         }
         while (window.size() < size && nextSeqNum < transportLayer.getSizeMessage()) {
             addPacket(transportLayer.getPacket(nextSeqNum));
@@ -50,7 +48,7 @@ public class CongestionWindow {
 
     /**
      * When a timeout occurs, the congestion window is halved and the slow start threshold is set to
-     * half the congestion window
+     * half the congestion window.
      */
     public void timeout(){
         inSlowStart=true;
@@ -61,7 +59,7 @@ public class CongestionWindow {
 
    /**
     * The multiplicative decrease function halves the congestion window size and sets the slow start
-    * threshold to the congestion window size
+    * threshold to the congestion window size.
     */
     public void multiplicativeDecrease(){
         ssThresh = size/2 + size%2;
@@ -71,7 +69,7 @@ public class CongestionWindow {
 
     /**
      * If the sequence number is valid, set the corresponding bit in the bit array to true, check the
-     * window, update the window size, and add the new window size to the plot
+     * window, update the window size, and add the new window size to the plot.
      * 
      * @param sequenceNumber The sequence number of the packet that was received.
      */
@@ -85,9 +83,9 @@ public class CongestionWindow {
     }
 
     /**
-     * If the window is not full, add the packet to the window and send it
+     * If the window is not full, add the packet to the window and send it.
      * 
-     * @param packet The packet to be added to the window
+     * @param packet The packet to be added to the window.
      */
     public void addPacket(SelectiveRepeatPacket packet) throws Exception {
         if (window.size() < size && transportLayer.getSizeMessage()-1 >= nextSeqNum){
@@ -99,10 +97,9 @@ public class CongestionWindow {
     }
 
     /**
-     * This function removes the first packet in the window and updates the window accordingly
+     * This function removes the first packet in the window and updates the window accordingly.
      */
     public void removePacket() throws Exception {
-        //plot.addPoint(size+0.0);
         nextSeqNum = window.get(window.size()-1).getSequenceNumber()+1;
         packetAcks.remove(0);
         window.remove(0);
@@ -114,7 +111,7 @@ public class CongestionWindow {
     }
 
     /**
-     * If the first packet in the window has been acked, remove it from the window
+     * If the first packet in the window has been acked, remove it from the window.
      */
     private void checkWindow() throws Exception {
         if (packetAcks.get(0).equals(true)){
@@ -123,7 +120,7 @@ public class CongestionWindow {
     }
 
     /**
-     * This function returns the size of the wuindow.
+     * This function returns the size of the window.
      * 
      * @return The size of the window.
      */
@@ -132,7 +129,7 @@ public class CongestionWindow {
     }
 
     /**
-     * It prints the sequence numbers of the packets in the window
+     * It prints the sequence numbers of the packets in the window.
      */
     private void printWindow(){
         String txt="     Congestion Window (size: "+size+") : ";

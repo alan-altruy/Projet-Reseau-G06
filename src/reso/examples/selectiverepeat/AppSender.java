@@ -5,7 +5,8 @@ import reso.ip.IPAddress;
 import reso.ip.IPHost;
 
 /**
- * It sends a message to the receiver
+ * This class represents the application that will send a message to the receiver application.
+ * It extends the abstract class AbstractApplication and implements the method start().
  */
 public class AppSender extends AbstractApplication {
 
@@ -20,7 +21,7 @@ public class AppSender extends AbstractApplication {
     }
 
     /**
-     * Send a message to the other side, and then wait for the other side to send a ack back.
+     * Sends a message to the other side of the connection, and then wait to receive an ack back.
      */
     public void start() throws Exception {
         transportLayer.sendMessage(new SelectiveRepeatMessage(numberOfPackets));

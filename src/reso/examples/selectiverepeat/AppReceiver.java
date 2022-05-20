@@ -4,7 +4,8 @@ import reso.common.AbstractApplication;
 import reso.ip.IPHost;
 
 /**
- * It extends the abstract class AbstractApplication and implements the method start()
+ * This class represents the application that will receive a message from the sender application.
+ * It extends the abstract class AbstractApplication and implements the method start().
  */
 public class AppReceiver extends AbstractApplication {
 	

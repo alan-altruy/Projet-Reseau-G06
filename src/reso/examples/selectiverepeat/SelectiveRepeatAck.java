@@ -3,7 +3,7 @@ package reso.examples.selectiverepeat;
 import reso.common.Message;
 
 /**
- * It's a ack that contains an integer (sequence number)
+ * It's an ack that contains an integer (sequence number).
  */
 public class SelectiveRepeatAck implements Message {
 
@@ -16,7 +16,7 @@ public class SelectiveRepeatAck implements Message {
     }
 
     /**
-     * The function returns the sequence number of the packet
+     * The function returns the sequence number of the packet.
      * 
      * @return The sequence number of the packet.
      */
@@ -25,7 +25,7 @@ public class SelectiveRepeatAck implements Message {
     }
 
     /**
-     * The toString() function returns a string representation of the object
+     * The toString() function returns a string representation of the object.
      * 
      * @return The sequence number of the ack.
      */
