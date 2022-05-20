@@ -29,12 +29,17 @@ public class TransportLayer{
     private int repeat = 0;
     private CongestionWindow congestionWindow;
 
+    /**
+     * The `PacketTimer` class is a subclass of the `AbstractTimer` class. It is used to keep track of
+     * the time it takes for a packet to be acknowledged by the receiver
+     */
     private class PacketTimer extends AbstractTimer {
 
         int sequenceNumber;
         private final boolean isRetransmitted;
         double startTime, endTime;
 
+        // Create a timer for all packets that are sent
         public PacketTimer(int sequenceNumber, double interval, boolean isRetransmitted) {
             super(host.getNetwork().getScheduler(), interval, false);
             startTime = host.getNetwork().getScheduler().getCurrentTime();
@@ -43,6 +48,9 @@ public class TransportLayer{
             this.start();
         }
 
+        /**
+         * The function stops the timer and prints out the RTT
+         */
         private void stopTimer() {
             endTime = scheduler.getCurrentTime();
             stop();
@@ -50,6 +58,10 @@ public class TransportLayer{
                     ") stopped= " + (int)(getRTT()*1000) + " ms");
         }
 
+        /**
+         * When a timeout occurs, the congestion window is reset, the RTO is doubled, and the packet is
+         * resent
+         */
         protected void run() throws Exception {
             rto *=2;
             congestionWindow.timeout();
@@ -59,10 +71,20 @@ public class TransportLayer{
             sendPacket(sequenceNumber);
         }
 
+        /**
+         * This function checks if the packet is retransmitted or not
+         * 
+         * @return The method isRetransmitted() is being returned.
+         */
         private boolean isRetransmitted(){
             return isRetransmitted;
         }
 
+        /**
+         * This function returns the round trip time of the packet
+         * 
+         * @return The difference between the end time and the start time.
+         */
         private double getRTT(){
             return endTime - startTime;
         }
