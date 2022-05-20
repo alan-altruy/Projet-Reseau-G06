@@ -23,6 +23,9 @@ import reso.scheduler.AbstractScheduler;
 import reso.scheduler.Scheduler;
 import reso.utilities.NetworkBuilder;
 
+/**
+ * It creates two hosts, H1 and H2, and connects them with a 5000km long link
+ */
 public class Demo {
 	/* Enable or disable packet capture (can be used to observe ARP messages) */
 	private static final boolean ENABLE_SNIFFER= false;

@@ -12,14 +12,19 @@ import de.erichseifert.gral.ui.InteractivePanel;
 import java.awt.*;
 
 
+/**
+ * It's a Java class that extends JFrame and has a method to add a point to a graph
+ * This represents the evolution of the size of the send window
+ */
 public class PlotWindow extends JFrame{
     private final Color RED_COLOR = Color.RED, GREEN_COLOR = new Color(30, 100, 40);
     private double before_x = 0, before_y = 0;
     private DataTable points;
     private LineRenderer lines;
+    private XYPlot plot;
 
-    XYPlot plot;
-
+    // It's the constructor of the class. It creates a new window with a graph and sets the title, the
+    // size, the labels, the ticks, the insets, the bounds, etc.
     public PlotWindow(String name) {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(800, 600);
@@ -43,6 +48,12 @@ public class PlotWindow extends JFrame{
         getContentPane().add(new InteractivePanel(plot));
     }
 
+    /**
+     * It adds a point to the graph, and if the point is higher than the previous point, it makes the
+     * line green, otherwise it makes it red
+     * 
+     * @param y The value of the point to be added.
+     */
     public void addPoint(double y){
         before_x++;
         points.add(before_x, y);

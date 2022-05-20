@@ -10,6 +10,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="de.erichseifert.gral.core" level="project" />
+    <orderEntry type="library" name="de.erichseifert.gral.core" level="project" />
   </component>
 </module>
