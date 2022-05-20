@@ -224,6 +224,8 @@ public class TransportLayer{
             if (packet.getSequenceNumber() == expected){
                 toMove.add(packet);
                 expected++;
+            } else {
+                break;
             }
         }
         buffer.removeAll(toMove);
