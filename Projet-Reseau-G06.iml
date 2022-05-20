@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="github.yannrichet.JMathPlot" level="project" />
+    <orderEntry type="library" name="de.erichseifert.gral.core" level="project" />
   </component>
 </module>
