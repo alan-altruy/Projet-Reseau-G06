@@ -43,6 +43,16 @@ public class Demo {
 	 *  are spaced by 0.025 seconds (only the propagation delay). 
 	 */
     public static void main(String [] args) {
+		int packet=30;
+		double rate=0.95;
+		for (String arg : args){
+			if (arg.startsWith("packet=")){
+				packet = Integer.parseInt(arg.split("=")[1]);
+			} else if (arg.startsWith("rate=")){
+				rate = Double.parseDouble(arg.split("=")[1]);
+			}
+		}
+		System.out.println("Rate = " + rate + ", Number of packets = " + packet);
 		AbstractScheduler scheduler= new Scheduler();
 		Network network= new Network(scheduler);
     	try {
@@ -55,11 +65,11 @@ public class Demo {
     		host1.getIPLayer().addRoute(IP_ADDR2, "eth0");
     		if (ENABLE_SNIFFER)
     			host1.addApplication(new AppSniffer(host1, new String [] {"eth0"}));
-    		host1.addApplication(new AppSender(host1, IP_ADDR2));
+    		host1.addApplication(new AppSender(host1, IP_ADDR2, rate, packet));
 
     		IPHost host2= NetworkBuilder.createHost(network,"H2", IP_ADDR2, MAC_ADDR2);
     		host2.getIPLayer().addRoute(IP_ADDR1, "eth0");
-    		host2.addApplication(new AppReceiver(host2));
+    		host2.addApplication(new AppReceiver(host2, rate));
 
     		EthernetInterface h1_eth0= (EthernetInterface) host1.getInterfaceByName("eth0");
     		EthernetInterface h2_eth0= (EthernetInterface) host2.getInterfaceByName("eth0");

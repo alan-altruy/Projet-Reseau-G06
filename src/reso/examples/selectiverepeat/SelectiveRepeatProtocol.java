@@ -28,7 +28,7 @@ public class SelectiveRepeatProtocol implements IPInterfaceListener {
 	@Override
 	public void receive(IPInterfaceAdapter src, Datagram datagram) throws Exception {
 		Message message = datagram.getPayload();
-		System.out.println("* SelectiveRepeat (" + (int) (host.getNetwork().getScheduler().getCurrentTime()*1000) + "ms)" +
+		System.out.println("[+] Received (" + (int) (host.getNetwork().getScheduler().getCurrentTime()*1000) + "ms)" +
 				" host=" + host.name + ", dgram.src=" + datagram.src + ", dgram.dst=" +
 				datagram.dst + ", iif=" + src + ", " + message.toString());
 		if (message.getByteLength() == 4){

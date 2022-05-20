@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <annotation-paths>
+      <root url="file://$MAVEN_REPOSITORY$/de/erichseifert" />
+    </annotation-paths>
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="github.yannrichet.JMathPlot" level="project" />
-    <orderEntry type="library" name="de.erichseifert.gral.core" level="project" />
+    <orderEntry type="library" exported="" name="de.erichseifert.gral.core" level="project" />
   </component>
 </module>

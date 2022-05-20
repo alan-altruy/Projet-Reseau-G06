@@ -63,6 +63,7 @@ public class CongestionWindow {
     public void addPacket(SelectiveRepeatPacket packet) throws Exception {
         if (window.size() < size && transportLayer.getSizeMessage()-1 >= nextSeqNum){
             window.add(packet);
+            printWindow();
             packetAcks.add(false);
             transportLayer.sendPacket(packet.getSequenceNumber());
         }
@@ -73,7 +74,7 @@ public class CongestionWindow {
         nextSeqNum = window.get(window.size()-1).getSequenceNumber()+1;
         packetAcks.remove(0);
         window.remove(0);
-        printPacket();
+        printWindow();
         firstSeqNum++;
         if (!window.isEmpty()){
             checkWindow();
@@ -90,10 +91,11 @@ public class CongestionWindow {
         return size;
     }
 
-    private void printPacket(){
-        String txt="Congestion Window: ";
-        for (SelectiveRepeatPacket packet : window){
-            txt += packet.getSequenceNumber()+" - ";
+    private void printWindow(){
+        String txt="     Congestion Window (size: "+size+") : ";
+
+        for (int i=0; i< Math.min(size, window.size()); i++){
+            txt += window.get(i).getSequenceNumber()+" - ";
         }
         System.out.println(txt);
     }

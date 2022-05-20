@@ -17,9 +17,9 @@ public class AppReceiver extends AbstractApplication {
 	
 	private final TransportLayer transportLayer;
     	
-	public AppReceiver(IPHost host) {
+	public AppReceiver(IPHost host, Double rate) {
 		super(host, "receiver");
-		transportLayer = new TransportLayer(host);
+		transportLayer = new TransportLayer(host, rate);
     }
 	
 	public void start() {

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>de.erichseifert.vectorgraphics2d</groupId>
+  <artifactId>VectorGraphics2D</artifactId>
+  <version>0.10</version>
+  <name>VectorGraphics2D</name>
+  <description>A library for adding vector export to Java(R) Graphics2D.</description>
+  <url>https://github.com/eseifert/vectorgraphics2d/</url>
+  <inceptionYear>2010</inceptionYear>
+  <licenses>
+    <license>
+      <name>GNU Library or Lesser General Public License (LGPL)</name>
+      <url>http://www.gnu.org/licenses/lgpl.txt</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>eseifert</id>
+      <name>Erich Seifert</name>
+      <email>dev[at]erichseifert.de</email>
+    </developer>
+    <developer>
+      <id>mseifert</id>
+      <name>Michael Seifert</name>
+      <email>mseifert[at]error-reports.org</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git://github.com/eseifert/vectorgraphics2d.git</connection>
+    <developerConnection>scm:git:git@github.com:eseifert/vectorgraphics2d.git</developerConnection>
+    <url>https://github.com/eseifert/vectorgraphics2d/</url>
+  </scm>
+  <issueManagement>
+    <system>GitHub Issues</system>
+    <url>https://github.com/eseifert/vectorgraphics2d/</url>
+  </issueManagement>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.ghost4j</groupId>
+      <artifactId>ghost4j</artifactId>
+      <version>1.0.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-library</artifactId>
+      <version>1.3</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>batik</groupId>
+      <artifactId>batik-transcoder</artifactId>
+      <version>1.6-1</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>fop</artifactId>
+          <groupId>fop</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+  </dependencies>
+</project>

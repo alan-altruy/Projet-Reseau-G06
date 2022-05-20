@@ -17,14 +17,16 @@ import reso.ip.IPHost;
 public class AppSender extends AbstractApplication {
 
     private final TransportLayer transportLayer;
+    private final int numberOfPackets;
 
-    public AppSender(IPHost host, IPAddress dst) {
+    public AppSender(IPHost host, IPAddress dst, Double rate, int numberOfPackets) {
     	super(host, "sender");
-        transportLayer = new TransportLayer(host, dst);
+        transportLayer = new TransportLayer(host, dst, rate);
+        this.numberOfPackets = numberOfPackets;
     }
 
     public void start() throws Exception {
-        transportLayer.sendMessage(new SelectiveRepeatMessage(50));
+        transportLayer.sendMessage(new SelectiveRepeatMessage(numberOfPackets));
     }
     
     public void stop() {}
